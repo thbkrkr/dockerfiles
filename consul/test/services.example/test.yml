@@ -1,0 +1,28 @@
+version: '3.1'
+
+services:
+  test-telnet-1:
+    image: krkr/bim
+    deploy:
+      labels:
+        - service={"name":"test-telnet-1","checks":[ "check-telnet notify.c1.blurb.space 443" ]}
+  test-telnet-2:
+    image: krkr/bim
+    deploy:
+      labels:
+        - service={"name":"test-telnet-2","checks":[ "check-telnet notify.c1.blurb.space 1234" ]}
+  test-zk-1:
+    image: krkr/bim
+    deploy:
+      labels:
+        - service={"name":"test-zk-1","checks":[ "check-zk n5.s1.gra.queue.ovh.net 2182" ]}
+  test-zk-2:
+    image: krkr/bim
+    deploy:
+      labels:
+        - service={"name":"test-zk-2","checks":[ "check-zk n5.s1.gra.queue.ovh.net 2181" ]}
+
+networks:
+  default:
+    external:
+      name: c1_traefik

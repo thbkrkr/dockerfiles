@@ -1,0 +1,30 @@
+#!/bin/bash
+#
+# check-zk HOST PORT
+#
+# OK if the current zookeeper is a follower or a leader.
+
+main() {
+  declare host="$1"; port=$2
+  local tmpfile=/tmp/.chck.$(date +%s).$RANDOM
+  trap "rm -f $tmpfile" EXIT
+
+  echo srvr | nc -v -w2 $host $port &> $tmpfile
+
+  state=$(grep Mode: $tmpfile | cut -d ' ' -f2)
+
+  local agent_host=$(hostname)
+  case $state in
+    leader|follower)
+      echo -n 'check_zk-qorum OK zk='$host':'$port' state='$state' agent='$agent_host' <br>'$(cat $tmpfile)
+      exit 0
+      ;;
+    *)
+      echo -n 'check_zk-qorum KO zk='$host':'$port' agent='$agent_host' <br>'$(cat $tmpfile)
+      exit 2
+      ;;
+  esac
+  rm $tmpfile
+}
+
+main $@

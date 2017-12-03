@@ -1,0 +1,14 @@
+{
+  "watches": [
+    {
+      "type": "checks",
+      "state": "critical",
+      "handler": "checks-handler.sh"
+    },
+    {
+      "type": "checks",
+      "state": "passing",
+      "handler": "checks-handler.sh"
+    }
+  ]
+}

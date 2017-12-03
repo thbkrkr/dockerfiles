@@ -1,0 +1,34 @@
+#!/bin/bash
+#
+# check-http STATUS URL [CURL_OPTS]
+#
+
+main() {
+  declare expected=$1; shift
+  declare url=$1; shift
+  declare opts="$@"
+  local curl_cmd="curl \
+    --silent \
+    --connect-timeout 1 \
+    --retry 2 \
+    $opts \
+    -o /dev/null \
+    $url \
+    -w %{http_code}"
+
+  local status=$($curl_cmd)
+
+  local agent_host=$(hostname)
+  case $status in
+    $expected)
+      echo -n "check_http OK url=$url status=$status agent=$agent_host"
+      exit 0
+      ;;
+    *)
+      echo -n "check_http KO url=$url status=$status expected=$expected agent=$agent_host"
+      exit 2
+      ;;
+  esac
+}
+
+main $@

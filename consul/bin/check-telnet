@@ -1,0 +1,29 @@
+#!/bin/bash
+#
+# check-telnet HOST PORT
+#
+
+main() {
+  declare host=$1 port=$2
+  local cmd="tcping $host $port" expected=0
+  local tmpfile=/tmp/.chck.$(date +%s).$RANDOM
+  trap "rm -f $tmpfile" EXIT
+
+  $cmd &> $tmpfile
+  local status=$?
+
+  local agent_host=$(hostname)
+  case $status in
+    $expected)
+      echo -n 'check_telnet OK flow='$host':'$port' agent='$agent_host' <br>'$(cat $tmpfile)
+      exit 0
+      ;;
+    *)
+      echo -n 'check_telnet KO flow='$host':'$port' agent='$agent_host' <br>'$(cat $tmpfile)
+      exit 2
+      ;;
+  esac
+
+}
+
+main $@
