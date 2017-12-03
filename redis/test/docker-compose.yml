@@ -1,0 +1,87 @@
+version: '3.4'
+
+services:
+
+  master1:
+    image: krkr/redis
+    network_mode: host
+    ports:
+      - 7001:7001
+    environment:
+      - redis-port=7001
+      - redis-protected-mode=no
+      - redis-appendonly=yes
+      - redis-appendfilename=redis-m.aof
+      - redis-cluster-enabled=yes
+      - redis-cluster-config-file=nodes-m.conf
+      - redis-cluster-node-timeout=5000
+
+  master2:
+    image: krkr/redis
+    network_mode: host
+    ports:
+      - 7002:7002
+    environment:
+      - redis-port=7002
+      - redis-protected-mode=no
+      - redis-appendonly=yes
+      - redis-appendfilename=redis-m.aof
+      - redis-cluster-enabled=yes
+      - redis-cluster-config-file=nodes-m.conf
+      - redis-cluster-node-timeout=5000
+
+  master3:
+    image: krkr/redis
+    network_mode: host
+    ports:
+      - 7003:7003
+    environment:
+      - redis-port=7003
+      - redis-protected-mode=no
+      - redis-appendonly=yes
+      - redis-appendfilename=redis-m.aof
+      - redis-cluster-enabled=yes
+      - redis-cluster-config-file=nodes-m.conf
+      - redis-cluster-node-timeout=5000
+
+  slave1:
+    image: krkr/redis
+    network_mode: host
+    ports:
+      - 7011:7011
+    environment:
+      - redis-port=7011
+      - redis-protected-mode=no
+      - redis-appendonly=yes
+      - redis-appendfilename=redis-s.aof
+      - redis-cluster-enabled=yes
+      - redis-cluster-config-file=nodes-s.conf
+      - redis-cluster-node-timeout=5000
+
+  slave2:
+    image: krkr/redis
+    network_mode: host
+    ports:
+      - 7012:7012
+    environment:
+      - redis-port=7012
+      - redis-protected-mode=no
+      - redis-appendonly=yes
+      - redis-appendfilename=redis-s.aof
+      - redis-cluster-enabled=yes
+      - redis-cluster-config-file=nodes-s.conf
+      - redis-cluster-node-timeout=5000
+
+  slave3:
+    image: krkr/redis
+    network_mode: host
+    ports:
+      - 7013:7013
+    environment:
+      - redis-port=7013
+      - redis-protected-mode=no
+      - redis-appendonly=yes
+      - redis-appendfilename=redis-s.aof
+      - redis-cluster-enabled=yes
+      - redis-cluster-config-file=nodes-s.conf
+      - redis-cluster-node-timeout=5000
