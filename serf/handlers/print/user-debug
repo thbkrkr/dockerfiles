@@ -1,0 +1,10 @@
+#!/bin/sh
+
+echo "#### New event: ${SERF_EVENT}. Data follows..."
+f=$(mktemp)
+echo "event:$SERF_EVENT" > $f
+env >> $f
+cat $f
+# while read line; do
+#   printf "${line}\n"
+# done

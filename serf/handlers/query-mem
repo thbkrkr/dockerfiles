@@ -1,0 +1,11 @@
+#!/bin/bash -eu
+
+out=$(free -m | grep "^Mem:")
+set -- $out
+k=$(echo $1 | tr [A-Z] [a-z] | sed -e s/://)
+[ "${5:-}" != "" ] && echo "sys.memory.$k.shared" "$5"
+[ "${6:-}" != "" ] && echo "sys.memory.$k.buffers" "$6"
+[ "${7:-}" != "" ] && echo "sys.memory.$k.cached" "$7"
+echo "sys.memory.$k.total" "$2"
+echo "sys.memory.$k.used" "$3"
+echo "sys.memory.$k.free" "$4"

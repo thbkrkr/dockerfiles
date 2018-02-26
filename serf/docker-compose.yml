@@ -1,0 +1,9 @@
+version: '3.3'
+
+services:
+
+  agent:
+    image: krkr/serf
+    env_file:
+      - .env
+      - .kafka.env

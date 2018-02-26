@@ -1,0 +1,5 @@
+#!/bin/sh -eu
+
+serf event info "ping started"
+
+ping -c3 -w5 blurb.space
