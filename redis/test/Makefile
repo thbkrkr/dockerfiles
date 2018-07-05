@@ -1,13 +1,15 @@
+redis-cli := docker run --rm --net=host krkr/redis redis-cli
+
 run:
 	docker-compose up
 
 info:
-	redis-cli -p 7001 cluster nodes
-	redis-cli -p 7002 cluster nodes
-	redis-cli -p 7003 cluster nodes
-	redis-cli -p 7011 cluster nodes
-	redis-cli -p 7012 cluster nodes
-	redis-cli -p 7013 cluster nodes
+	@ # $(redis-cli) -p 7001 cluster nodes &
+	@ # $(redis-cli) -p 7002 cluster nodes &
+	@ # $(redis-cli) -p 7003 cluster nodes &
+	@ # $(redis-cli) -p 7011 cluster nodes &
+	@ # $(redis-cli) -p 7012 cluster nodes &
+	@ $(redis-cli) -p 7013 cluster nodes
 
 create-cluster:
 	docker run --rm -ti --net=host \
