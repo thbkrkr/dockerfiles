@@ -1,7 +1,7 @@
 #
 # docker build -t krkr/traefik .
 #
-FROM traefik:v1.5.0-alpine
+FROM traefik:v1.6.2-alpine
 
 COPY traefik.toml /etc/traefik/traefik.toml
 COPY docker-entrypoint.sh /docker-entrypoint.sh

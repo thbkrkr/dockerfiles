@@ -8,20 +8,31 @@ defaultEntryPoints = ["http", "https"]
   [entryPoints.https]
   address = ":{{ HTTPS_PORT }}"
     [entryPoints.https.tls]
+  [entryPoints.api]
+  address = ":8080"
 
-[web]
-address = ":8080"
+[api]
+  entryPoint = "api"
+  dashboard = true
 
 [acme]
+acmeLogging = true
 email = "{{ ACME_EMAIL }}"
 storage = "/data/acme.json"
 entryPoint = "https"
 onHostRule = true
+[acme.dnsChallenge]
+  provider = "{{ DNS_PROVIDER }}"
+  delayBeforeCheck = 0
+[[acme.domains]]
+  main = "*.{{ DOMAIN }}"
+  sans = ["q.{{ DOMAIN }}","love.{{ DOMAIN }}","logz.{{ DOMAIN }}"]
 [acme.httpChallenge]
-  entryPoint = "http"
+entryPoint = "http"
 
 [docker]
 endpoint = "unix:///var/run/docker.sock"
+domain = "{{ DOMAIN }}"
 watch = true
-swarmmode = {{ SWARM_MODE }}
-exposedbydefault = true
+swarmMode = {{ SWARM_MODE }}
+exposedByDefault = true
